@@ -4,6 +4,8 @@
 #include "partie.h"
 #include "affichagejeu.h"
 
+//TODO: Intégrer la gestion des inputs utilisateurs
+
 class ControlleurJeu
 {
 public:

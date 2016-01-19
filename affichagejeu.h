@@ -4,6 +4,8 @@
 #include <iostream>
 
 #include "partie.h"
+//TODO : Intégrer OpenGL
+//TODO : Intégrer la gestion de la police
 
 class AffichageJeu
 {

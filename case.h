@@ -6,6 +6,9 @@
 #include "couleur.h"
 #include "objet.h"
 
+//TODO : Ajouter une couleur de fond ? (ou si passable colorer quand visible et noir sinon ?)
+//TODO : Gestion de l'inventaire d'une case (intégrer inventaire ?)
+
 class Case
 {
 public:

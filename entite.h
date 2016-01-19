@@ -1,6 +1,7 @@
 #ifndef ENTITE_H
 #define ENTITE_H
 
+//TODO : A préciser
 
 class Entite
 {

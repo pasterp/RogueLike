@@ -5,6 +5,8 @@
 
 #include "case.h"
 
+//TODO : Gérer la carte selon une taille voulue et centrée sur un point
+
 class Carte
 {
 public:

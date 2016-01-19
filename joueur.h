@@ -3,6 +3,8 @@
 
 #include "entite.h"
 
+//TODO : A definir
+
 class Joueur : public Entite
 {
 public:

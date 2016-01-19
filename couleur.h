@@ -16,6 +16,8 @@ private:
     void InitCouleur(int r, int v, int b, int a);
 };
 
+
+//TODO : Trouver de jolies couleurs
 namespace Couleurs {
     static Couleur BLANC = Couleur(0,0,0);
     static Couleur GRIS  = Couleur(120,120,120);

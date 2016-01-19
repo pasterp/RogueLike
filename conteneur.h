@@ -1,8 +1,12 @@
 #ifndef CONTENEUR_H
 #define CONTENEUR_H
 
+//TODO : Créer cette classe
 
-class Conteneur
+#include "objet.h"
+#include "inventaire.h"
+
+class Conteneur : public Objet, Inventaire
 {
 public:
     Conteneur();
