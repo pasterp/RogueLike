@@ -31,3 +31,12 @@ HEADERS += \
     conteneur.h \
     couleur.h
 
+INCLUDEPATH += \
+    /usr/include/freetype2
+
+LIBS += \
+    -lGL \
+    -lGLU \
+    -lGLEW \
+    -lglfw  \
+    -lftgl   \

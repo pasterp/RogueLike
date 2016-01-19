@@ -6,6 +6,7 @@
 class Entite
 {
 public:
+    Entite();
     Entite(int x, int y);
 protected:
     int m_X;

@@ -2,8 +2,9 @@
 #define CREATURE_H
 
 //TODO : A définir
+#include "entite.h"
 
-class Creature
+class Creature : public Entite
 {
 public:
     Creature();

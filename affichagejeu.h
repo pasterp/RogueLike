@@ -3,6 +3,11 @@
 
 #include <iostream>
 
+#include <GL/glew.h>
+#include <GLFW/glfw3.h>
+
+#include <FTGL/ftgl.h>
+
 #include "partie.h"
 //TODO : Intégrer OpenGL
 //TODO : Intégrer la gestion de la police

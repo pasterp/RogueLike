@@ -1,5 +1,11 @@
 #include "entite.h"
 
+Entite::Entite()
+{
+    m_X = 0;
+    m_Y = 0;
+}
+
 Entite::Entite(int x, int y)
 {
     m_X = x;
