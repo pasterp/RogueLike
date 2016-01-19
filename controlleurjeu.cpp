@@ -11,4 +11,12 @@ void ControlleurJeu::InitControlleur(Partie *part){
     m_Affichage->afficherMessage("Initialisation controlleur...");
 
     m_Affichage->afficherJeu();
+
+    int i = 0;
+    char tour[20];
+    while(!m_Affichage->renduIteration()){
+        sprintf(tour, "Frame n°%i.", i);
+        m_Affichage->afficherMessage(tour);
+        i++;
+    }
 }

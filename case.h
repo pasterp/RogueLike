@@ -13,6 +13,7 @@ class Case
 {
 public:
     Case();
+    Case(char s, bool d, bool v, bool p, Couleur* visible, Couleur* nonvisible);
 
     inline char getSymbole(){ return m_Symbole; }
 private:
@@ -26,5 +27,8 @@ private:
 
     void InitCase(char s, bool d, bool v, bool p, Couleur* visible, Couleur* nonvisible);
 };
+
+static Case VIDE = Case('.', false, false, false, &Couleurs::GRIS_FONCE, &Couleurs::GRIS_FONCE);
+static Case MUR = Case('#', true, true, false, &Couleurs::BLANC, &Couleurs::GRIS);
 
 #endif // CASE_H
