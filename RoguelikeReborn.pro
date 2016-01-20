@@ -15,7 +15,8 @@ SOURCES += main.cpp \
     joueur.cpp \
     inventaire.cpp \
     conteneur.cpp \
-    couleur.cpp
+    couleur.cpp \
+    keylistener.cpp
 
 HEADERS += \
     controlleurjeu.h \
@@ -29,7 +30,8 @@ HEADERS += \
     joueur.h \
     inventaire.h \
     conteneur.h \
-    couleur.h
+    couleur.h \
+    keylistener.h
 
 INCLUDEPATH += \
     /usr/include/freetype2

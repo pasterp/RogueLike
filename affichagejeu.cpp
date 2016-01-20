@@ -33,7 +33,7 @@ void AffichageJeu::afficherJeu()
     for(int i=0; i < carte->getTailleY(); i++){
         for(int j=0; j < carte->getTailleX(); j++){
             entTrouve = false;
-            for (int e = 0; e < entites.size() && !entTrouve; e++){
+            for (unsigned int e = 0; e < entites.size() && !entTrouve; e++){
                 if (i==entites[e].getY() && j==entites[e].getX() && grille[i][j].isVisible()){
                     entTrouve = true;
 
@@ -91,6 +91,12 @@ bool AffichageJeu::renduIteration()
     return glfwWindowShouldClose(m_Window);
 }
 
+void AffichageJeu::key_callback(GLFWwindow *window, int key, int scancode, int action, int mods)
+{
+    if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
+        glfwSetWindowShouldClose(window, GL_TRUE);
+}
+
 
 void AffichageJeu::initAffichageJeu(Partie* p, int x, int y, std::string s){
     std::cout << "Initialisation affichage..." << std::endl;
@@ -131,7 +137,7 @@ void AffichageJeu::initAffichageJeu(Partie* p, int x, int y, std::string s){
     std::cout << "\tGLEW Version: " << glewGetString(GLEW_VERSION) << std::endl;
 
     glViewport(0, 0, m_CharLargeur*(m_TailleX), m_CharHauteur*(m_TailleY));
-
+    glfwSetKeyCallback(m_Window, AffichageJeu::key_callback);
 
     glClearColor(Couleurs::GRIS_FONCE.Rf(), Couleurs::GRIS_FONCE.Vf(), Couleurs::GRIS_FONCE.Bf(), 1.0f);
 }

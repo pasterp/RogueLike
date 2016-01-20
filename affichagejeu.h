@@ -11,6 +11,7 @@
 #include "partie.h"
 #include "carte.h"
 #include "case.h"
+#include "keylistener.h"
 
 //TODO: Afficher les entites
 
@@ -35,6 +36,8 @@ public:
     void afficherJeu();
     void afficherMessage(std::string s);
     bool renduIteration();
+    void registerListener(keyListener* key);
+    static void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods);
 private:
     Partie* m_Partie;
     int m_TailleX;
@@ -44,6 +47,8 @@ private:
     const char* m_Titre;
     GLFWwindow* m_Window;
     FTGLPixmapFont* m_Font;
+
+    std::vector<char> listeners;
 
     void initAffichageJeu(Partie* p, int x, int y, std::string s);
 };

@@ -18,3 +18,7 @@ void ControlleurJeu::InitControlleur(Partie *part){
         i++;
     }
 }
+
+void ControlleurJeu::keyPressed(){
+
+}
