@@ -10,11 +10,18 @@ class Entite
 public:
     Entite();
     Entite(int x, int y);
+
+    inline char getSymbole(){ return m_Symbole; }
+    inline Couleur* getCouleur(){ return m_Couleur; }
+    inline int getX(){ return m_X; }
+    inline int getY(){ return m_Y; }
 protected:
     char m_Symbole;
     Couleur* m_Couleur;
     int m_X;
     int m_Y;
+
+    void InitEntite(int x, int y, char c, Couleur* coul);
 };
 
 #endif // ENTITE_H

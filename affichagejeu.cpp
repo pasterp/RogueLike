@@ -22,30 +22,56 @@ AffichageJeu::AffichageJeu(Partie* p, int x, int y, std::string s){
 void AffichageJeu::afficherJeu()
 {
     Carte* carte = m_Partie->getCarte();
+    std::vector<Entite> entites = m_Partie->getEntites();
     carte->centrerSur(25,12);
     std::vector<std::vector<Case> > grille = carte->getGrille(m_TailleX, m_TailleY);
 
     std::string c = "!";
     Case* cc;
     Couleur* coul;
+    bool entTrouve;
     for(int i=0; i < carte->getTailleY(); i++){
         for(int j=0; j < carte->getTailleX(); j++){
-            cc = &grille[i][j];
-            c[0] = cc->getSymbole();
-            coul = cc->getCouleur();
+            entTrouve = false;
+            for (int e = 0; e < entites.size() && !entTrouve; e++){
+                if (i==entites[e].getY() && j==entites[e].getX() && grille[i][j].isVisible()){
+                    entTrouve = true;
 
-            glPushAttrib(GL_ALL_ATTRIB_BITS);
-            glDisable(GL_LIGHTING);
-            glDisable(GL_DEPTH_TEST);
+                    c[0] = entites[e].getSymbole();
+                    coul = entites[e].getCouleur();
 
-            glPixelTransferf(GL_RED_BIAS, coul->Rf()-1.0f);
-            glPixelTransferf(GL_GREEN_BIAS, coul->Vf()-1.0f);
-            glPixelTransferf(GL_BLUE_BIAS, coul->Bf()-1.0f);
+                    glPushAttrib(GL_ALL_ATTRIB_BITS);
+                    glDisable(GL_LIGHTING);
+                    glDisable(GL_DEPTH_TEST);
+
+                    glPixelTransferf(GL_RED_BIAS, coul->Rf()-1.0f);
+                    glPixelTransferf(GL_GREEN_BIAS, coul->Vf()-1.0f);
+                    glPixelTransferf(GL_BLUE_BIAS, coul->Bf()-1.0f);
 
 
-            m_Font->Render(c.c_str(), -1, FTPoint(m_CharLargeur * j, m_CharHauteur * i));
+                    m_Font->Render(c.c_str(), -1, FTPoint(m_CharLargeur * j, m_CharHauteur * i));
 
-            glPopAttrib();
+                    glPopAttrib();
+                }
+            }
+            if(!entTrouve){
+                cc = &grille[i][j];
+                c[0] = cc->getSymbole();
+                coul = cc->getCouleur();
+
+                glPushAttrib(GL_ALL_ATTRIB_BITS);
+                glDisable(GL_LIGHTING);
+                glDisable(GL_DEPTH_TEST);
+
+                glPixelTransferf(GL_RED_BIAS, coul->Rf()-1.0f);
+                glPixelTransferf(GL_GREEN_BIAS, coul->Vf()-1.0f);
+                glPixelTransferf(GL_BLUE_BIAS, coul->Bf()-1.0f);
+
+
+                m_Font->Render(c.c_str(), -1, FTPoint(m_CharLargeur * j, m_CharHauteur * i));
+
+                glPopAttrib();
+            }
         }
     }
 }

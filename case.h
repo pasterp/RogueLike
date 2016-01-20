@@ -17,6 +17,7 @@ public:
     inline char getSymbole(){ return m_Symbole; }
     inline char* getSymbole_(){ return &m_Symbole; }
     inline Couleur* getCouleur(){ return (m_Visible) ? m_CouleurVisible : m_CouleurNonvisible; }
+    inline bool isVisible(){ return m_Visible; }
 private:
     char m_Symbole;
     bool m_Decouverte;

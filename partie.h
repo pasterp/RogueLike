@@ -15,10 +15,11 @@ public:
     Partie(int x, int y);
 
     Carte* getCarte();
+    std::vector<Entite> getEntites();
 private:
     Carte* m_Carte;
     Joueur* m_Joueur;
-    std::vector<Entite> m_Entites();
+    std::vector<Entite> m_Entites;
 
     void InitPartie(int x, int y);
 };
