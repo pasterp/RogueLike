@@ -10,7 +10,7 @@ int main()
 {
     cout << "Roguelike Reborn ! v0.01" << endl;
 
-    Partie partie = Partie(20,16);
+    Partie partie = Partie(50,24);
     cout << "Initialisation modèle..." << endl;
     ControlleurJeu controlleur(&partie);
 

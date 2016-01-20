@@ -9,9 +9,10 @@
 #include <FTGL/ftgl.h>
 
 #include "partie.h"
+#include "carte.h"
+#include "case.h"
 
-//TODO : Intégrer OpenGL
-//TODO : Intégrer la gestion de la police
+//TODO: Afficher les entites
 
 class AffichageJeu
 {
@@ -36,8 +37,10 @@ public:
     bool renduIteration();
 private:
     Partie* m_Partie;
-    int m_TailleX, m_X;
-    int m_TailleY, m_Y;
+    int m_TailleX;
+    int m_TailleY;
+    float m_CharLargeur;
+    float m_CharHauteur;
     const char* m_Titre;
     GLFWwindow* m_Window;
     FTGLPixmapFont* m_Font;

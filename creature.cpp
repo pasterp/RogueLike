@@ -1,6 +1,6 @@
 #include "creature.h"
 
-Creature::Creature() : Entite()
+Creature::Creature(int x, int y) : Entite(x,y)
 {
 
 }

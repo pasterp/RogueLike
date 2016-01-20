@@ -6,8 +6,6 @@
 
 #include "case.h"
 
-//TODO : Gérer la carte selon une taille voulue et centrée sur un point
-
 class Carte
 {
 public:
@@ -16,12 +14,12 @@ public:
 
     void centrerSur(int x, int y);
     inline std::vector<std::vector<Case> > getGrille() {return m_Grille;}
-    std::vector<std::vector<Case> > getGrille(int x, int y, int centreX, int centreY);
+    std::vector<std::vector<Case> > getGrille(int x, int y);
     inline int getTailleX(){return m_TailleX;}
     inline int getTailleY(){return m_TailleY;}
 private:
-    int m_TailleX;
-    int m_TailleY;
+    int m_TailleX, m_CentreX;
+    int m_TailleY, m_CentreY;
     std::vector<std::vector<Case> > m_Grille;
 
     void InitCarte(int x, int y);

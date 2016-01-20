@@ -7,7 +7,7 @@
 class Creature : public Entite
 {
 public:
-    Creature();
+    Creature(int x, int y);
 };
 
 #endif // CREATURE_H

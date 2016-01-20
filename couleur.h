@@ -11,6 +11,9 @@ public:
     int m_Alpha;
 public:
     Couleur(int r, int v, int b);
+    inline float Rf(){return m_Rouge/255.0;}
+    inline float Vf(){return m_Vert/255.0;}
+    inline float Bf(){return m_Bleu/255.0;}
 
 private:
     void InitCouleur(int r, int v, int b, int a);

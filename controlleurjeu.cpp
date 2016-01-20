@@ -10,8 +10,6 @@ void ControlleurJeu::InitControlleur(Partie *part){
     m_Affichage = new AffichageJeu(part);
     m_Affichage->afficherMessage("Initialisation controlleur...");
 
-    m_Affichage->afficherJeu();
-
     int i = 0;
     char tour[20];
     while(!m_Affichage->renduIteration()){

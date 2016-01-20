@@ -6,7 +6,6 @@
 #include "couleur.h"
 #include "objet.h"
 
-//TODO : Ajouter une couleur de fond ? (ou si passable colorer quand visible et noir sinon ?)
 //TODO : Gestion de l'inventaire d'une case (intégrer inventaire ?)
 
 class Case
@@ -16,6 +15,8 @@ public:
     Case(char s, bool d, bool v, bool p, Couleur* visible, Couleur* nonvisible);
 
     inline char getSymbole(){ return m_Symbole; }
+    inline char* getSymbole_(){ return &m_Symbole; }
+    inline Couleur* getCouleur(){ return (m_Visible) ? m_CouleurVisible : m_CouleurNonvisible; }
 private:
     char m_Symbole;
     bool m_Decouverte;
@@ -28,7 +29,7 @@ private:
     void InitCase(char s, bool d, bool v, bool p, Couleur* visible, Couleur* nonvisible);
 };
 
-static Case VIDE = Case('.', false, false, false, &Couleurs::GRIS_FONCE, &Couleurs::GRIS_FONCE);
+static Case VIDE = Case(' ', false, false, false, &Couleurs::GRIS_FONCE, &Couleurs::GRIS_FONCE);
 static Case MUR = Case('#', true, true, false, &Couleurs::BLANC, &Couleurs::GRIS);
 
 #endif // CASE_H

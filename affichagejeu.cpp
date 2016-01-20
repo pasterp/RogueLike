@@ -7,7 +7,7 @@ AffichageJeu::~AffichageJeu()
 
 AffichageJeu::AffichageJeu(Partie* p)
 {
-    initAffichageJeu(p, 20, 16, "Debug!");
+    initAffichageJeu(p, 50, 25, "Debug!");
 }
 
 AffichageJeu::AffichageJeu(Partie* p, int x, int y)
@@ -22,17 +22,32 @@ AffichageJeu::AffichageJeu(Partie* p, int x, int y, std::string s){
 void AffichageJeu::afficherJeu()
 {
     Carte* carte = m_Partie->getCarte();
-    std::vector<std::vector<Case> > grille = carte->getGrille(m_TailleX, m_TailleY, 5, 5);
-    std::cout << "X: " << carte->getTailleX() << " Y: " << carte->getTailleY() << std::endl;
-    std::cout << "X demandé: " << m_TailleX << " Y demandé : " << m_TailleY << std::endl;
+    carte->centrerSur(25,12);
+    std::vector<std::vector<Case> > grille = carte->getGrille(m_TailleX, m_TailleY);
 
+    std::string c = "!";
+    Case* cc;
+    Couleur* coul;
     for(int i=0; i < carte->getTailleY(); i++){
         for(int j=0; j < carte->getTailleX(); j++){
-            std::cout << grille[i][j].getSymbole();
-        }
-        std::cout << std::endl;
-    }
+            cc = &grille[i][j];
+            c[0] = cc->getSymbole();
+            coul = cc->getCouleur();
 
+            glPushAttrib(GL_ALL_ATTRIB_BITS);
+            glDisable(GL_LIGHTING);
+            glDisable(GL_DEPTH_TEST);
+
+            glPixelTransferf(GL_RED_BIAS, coul->Rf()-1.0f);
+            glPixelTransferf(GL_GREEN_BIAS, coul->Vf()-1.0f);
+            glPixelTransferf(GL_BLUE_BIAS, coul->Bf()-1.0f);
+
+
+            m_Font->Render(c.c_str(), -1, FTPoint(m_CharLargeur * j, m_CharHauteur * i));
+
+            glPopAttrib();
+        }
+    }
 }
 
 void AffichageJeu::afficherMessage(std::string s){
@@ -41,22 +56,10 @@ void AffichageJeu::afficherMessage(std::string s){
 
 bool AffichageJeu::renduIteration()
 {
-    //TODO : Rendu OpenGL ici
     glfwSwapBuffers(m_Window);
     glClear(GL_COLOR_BUFFER_BIT);
 
-    glBegin(GL_TRIANGLES);
-    glColor3f(1.f, 0.f, 0.f);
-    glVertex3f(-0.6f, -0.4f, 0.f);
-    glColor3f(0.f, 1.f, 0.f);
-    glVertex3f(0.6f, -0.4f, 0.f);
-    glColor3f(0.f, 0.f, 1.f);
-    glVertex3f(0.f, 0.6f, 0.f);
-    glEnd();
-
-    m_Font->Render("Je suis un premier test", -1, FTPoint(m_X, m_Y));
-    m_X++;
-    m_Y = (m_X%2 == 0) ? m_Y : m_Y+1;
+    this->afficherJeu();
 
     glfwPollEvents();
     return glfwWindowShouldClose(m_Window);
@@ -69,11 +72,18 @@ void AffichageJeu::initAffichageJeu(Partie* p, int x, int y, std::string s){
     m_TailleX = x;
     m_TailleY = y;
     m_Titre = s.c_str();
+
+    m_Font = new FTGLPixmapFont("/home/pascal/Documents/Projets/QtCreator/Roguelike/FantasqueSansMono-Regular.ttf");
+    m_Font->FaceSize(12);
+
+    m_CharLargeur = m_Font->Advance("A");
+    m_CharHauteur = m_Font->LineHeight();
+
     if(!glfwInit()){
         std::cout << "GLFW non initialisé !" << std::endl;
         return;
     }
-    m_Window = glfwCreateWindow(20*m_TailleX, 20*m_TailleY, m_Titre, NULL, NULL);
+    m_Window = glfwCreateWindow(m_CharLargeur*(m_TailleX), m_CharHauteur*(m_TailleY), m_Titre, NULL, NULL);
 
     if (!m_Window)
     {
@@ -94,10 +104,8 @@ void AffichageJeu::initAffichageJeu(Partie* p, int x, int y, std::string s){
     std::cout << "\tGLWF Version: " << glfwGetVersionString() << std::endl;
     std::cout << "\tGLEW Version: " << glewGetString(GLEW_VERSION) << std::endl;
 
-    glViewport(0, 0, 20*m_TailleX, 20*m_TailleY);
+    glViewport(0, 0, m_CharLargeur*(m_TailleX), m_CharHauteur*(m_TailleY));
 
-    m_Font = new FTGLPixmapFont("/home/pascal/Documents/Projets/QtCreator/Roguelike/FantasqueSansMono-Regular.ttf");
-    m_Font->FaceSize(20, 20);
-    m_X = 0;
-    m_Y = 0;
+
+    glClearColor(Couleurs::GRIS_FONCE.Rf(), Couleurs::GRIS_FONCE.Vf(), Couleurs::GRIS_FONCE.Bf(), 1.0f);
 }
