@@ -18,6 +18,9 @@ public:
     inline char* getSymbole_(){ return &m_Symbole; }
     inline Couleur* getCouleur(){ return (m_Visible) ? m_CouleurVisible : m_CouleurNonvisible; }
     inline bool isVisible(){ return m_Visible; }
+    inline bool isPassable(){ return m_Passable; }
+    inline void setVisible(bool b){ m_Visible = b; }
+    inline void setDecouverte(bool b){ m_Decouverte = b; }
 private:
     char m_Symbole;
     bool m_Decouverte;
@@ -31,6 +34,6 @@ private:
 };
 
 static Case VIDE = Case(' ', false, false, false, &Couleurs::GRIS_FONCE, &Couleurs::GRIS_FONCE);
-static Case MUR = Case('#', true, true, false, &Couleurs::BLANC, &Couleurs::GRIS);
+static Case MUR = Case('#', false, false, false, &Couleurs::BLANC, &Couleurs::GRIS);
 
 #endif // CASE_H

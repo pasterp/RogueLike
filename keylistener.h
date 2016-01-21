@@ -7,7 +7,7 @@ class keyListener
 public:
     keyListener();
 
-    virtual void keyPressed() = 0;
+    virtual void keyPressed(int key) = 0;
 };
 
 #endif // KEYLISTENER_H

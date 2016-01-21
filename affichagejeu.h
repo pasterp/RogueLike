@@ -36,7 +36,7 @@ public:
     void afficherJeu();
     void afficherMessage(std::string s);
     bool renduIteration();
-    void registerListener(keyListener* key);
+    void registerListener(keyListener* keyl);
     static void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods);
 private:
     Partie* m_Partie;
@@ -47,10 +47,11 @@ private:
     const char* m_Titre;
     GLFWwindow* m_Window;
     FTGLPixmapFont* m_Font;
-
-    std::vector<char> listeners;
+    static std::vector<keyListener*> m_Listeners;
 
     void initAffichageJeu(Partie* p, int x, int y, std::string s);
 };
+
+
 
 #endif // AFFICHAGEJEU_H

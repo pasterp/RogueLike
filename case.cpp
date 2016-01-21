@@ -2,7 +2,7 @@
 
 Case::Case()
 {
-    InitCase('#', true, true, false, &Couleurs::BLANC, &Couleurs::GRIS);
+    InitCase('#', false, false, false, &Couleurs::BLANC, &Couleurs::GRIS);
 }
 
 Case::Case(char s, bool d, bool v, bool p, Couleur *visible, Couleur *nonvisible)

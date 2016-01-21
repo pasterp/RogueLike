@@ -1,5 +1,9 @@
 #include "affichagejeu.h"
 
+
+std::vector<keyListener*> AffichageJeu::m_Listeners = std::vector<keyListener*>(0);
+
+
 AffichageJeu::~AffichageJeu()
 {
     glfwTerminate();
@@ -22,7 +26,7 @@ AffichageJeu::AffichageJeu(Partie* p, int x, int y, std::string s){
 void AffichageJeu::afficherJeu()
 {
     Carte* carte = m_Partie->getCarte();
-    std::vector<Entite> entites = m_Partie->getEntites();
+    std::vector<Entite*> entites = m_Partie->getEntites();
     carte->centrerSur(25,12);
     std::vector<std::vector<Case> > grille = carte->getGrille(m_TailleX, m_TailleY);
 
@@ -32,17 +36,18 @@ void AffichageJeu::afficherJeu()
     bool entTrouve;
     for(int i=0; i < carte->getTailleY(); i++){
         for(int j=0; j < carte->getTailleX(); j++){
+            glPushAttrib(GL_ALL_ATTRIB_BITS);
+            glDisable(GL_LIGHTING);
+            glDisable(GL_DEPTH_TEST);
             entTrouve = false;
             for (unsigned int e = 0; e < entites.size() && !entTrouve; e++){
-                if (i==entites[e].getY() && j==entites[e].getX() && grille[i][j].isVisible()){
+                if (i==entites[e]->getY() && j==entites[e]->getX() && grille[i][j].isVisible()){
                     entTrouve = true;
 
-                    c[0] = entites[e].getSymbole();
-                    coul = entites[e].getCouleur();
+                    c[0] = entites[e]->getSymbole();
+                    coul = entites[e]->getCouleur();
 
-                    glPushAttrib(GL_ALL_ATTRIB_BITS);
-                    glDisable(GL_LIGHTING);
-                    glDisable(GL_DEPTH_TEST);
+
 
                     glPixelTransferf(GL_RED_BIAS, coul->Rf()-1.0f);
                     glPixelTransferf(GL_GREEN_BIAS, coul->Vf()-1.0f);
@@ -50,18 +55,12 @@ void AffichageJeu::afficherJeu()
 
 
                     m_Font->Render(c.c_str(), -1, FTPoint(m_CharLargeur * j, m_CharHauteur * i));
-
-                    glPopAttrib();
                 }
             }
             if(!entTrouve){
                 cc = &grille[i][j];
                 c[0] = cc->getSymbole();
                 coul = cc->getCouleur();
-
-                glPushAttrib(GL_ALL_ATTRIB_BITS);
-                glDisable(GL_LIGHTING);
-                glDisable(GL_DEPTH_TEST);
 
                 glPixelTransferf(GL_RED_BIAS, coul->Rf()-1.0f);
                 glPixelTransferf(GL_GREEN_BIAS, coul->Vf()-1.0f);
@@ -70,8 +69,8 @@ void AffichageJeu::afficherJeu()
 
                 m_Font->Render(c.c_str(), -1, FTPoint(m_CharLargeur * j, m_CharHauteur * i));
 
-                glPopAttrib();
             }
+            glPopAttrib();
         }
     }
 }
@@ -83,7 +82,7 @@ void AffichageJeu::afficherMessage(std::string s){
 bool AffichageJeu::renduIteration()
 {
     glfwSwapBuffers(m_Window);
-    glClear(GL_COLOR_BUFFER_BIT);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     this->afficherJeu();
 
@@ -91,10 +90,21 @@ bool AffichageJeu::renduIteration()
     return glfwWindowShouldClose(m_Window);
 }
 
+void AffichageJeu::registerListener(keyListener *keyl)
+{
+    AffichageJeu::m_Listeners.push_back(keyl);
+}
+
 void AffichageJeu::key_callback(GLFWwindow *window, int key, int scancode, int action, int mods)
 {
     if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
         glfwSetWindowShouldClose(window, GL_TRUE);
+
+    if(action == GLFW_PRESS){
+        for(int i = 0; i < AffichageJeu::m_Listeners.size(); i++){
+            AffichageJeu::m_Listeners[i]->keyPressed(key);
+        }
+    }
 }
 
 

@@ -15,6 +15,8 @@ public:
     inline Couleur* getCouleur(){ return m_Couleur; }
     inline int getX(){ return m_X; }
     inline int getY(){ return m_Y; }
+    inline void setX(int x){ m_X = x; }
+    inline void setY(int y){ m_Y = y; }
 protected:
     char m_Symbole;
     Couleur* m_Couleur;

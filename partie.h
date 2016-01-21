@@ -15,11 +15,12 @@ public:
     Partie(int x, int y);
 
     Carte* getCarte();
-    std::vector<Entite> getEntites();
+    std::vector<Entite*> getEntites();
+    bool deplacer(int xoffset, int yoffset);
 private:
     Carte* m_Carte;
     Joueur* m_Joueur;
-    std::vector<Entite> m_Entites;
+    std::vector<Entite*> m_Entites;
 
     void InitPartie(int x, int y);
 };

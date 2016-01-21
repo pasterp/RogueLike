@@ -10,6 +10,21 @@ Carte::Carte(int x, int y)
     InitCarte(x, y);
 }
 
+void Carte::vision()
+{
+    for (int j = 0; j < m_TailleY; j++){
+        for (int i = 0; i < m_TailleX; i++){
+            //parcourt des cases et si assez proche du joueur, illuminate sinon go dark
+            if( sqrt(pow(i-m_CentreX, 2) + pow(j-m_CentreY, 2)) < 5){
+                m_Grille[j][i].setVisible(true);
+                m_Grille[j][i].setDecouverte(true);
+            }else{
+                m_Grille[j][i].setVisible(false);
+            }
+        }
+    }
+}
+
 void Carte::centrerSur(int x, int y)
 {
     m_CentreX = x;
@@ -39,6 +54,11 @@ std::vector<std::vector<Case> > Carte::getGrille(int x, int y)
     return carteTronquee;
 }
 
+std::vector<Case> Carte::operator[](int a)
+{
+    return m_Grille[a];
+}
+
 void Carte::InitCarte(int x, int y){
     m_TailleX = x;
     m_TailleY = y;
@@ -53,7 +73,7 @@ void Carte::InitCarte(int x, int y){
             if (j==0 || i==0 || j == m_TailleY-1 || i == m_TailleX-1){
                 m_Grille[j][i] = MUR;
             }else{
-                m_Grille[j][i] = Case('.', true, true, true, &Couleurs::CYAN, &Couleurs::GRIS);
+                m_Grille[j][i] = Case('.', false, false, true, &Couleurs::CYAN, &Couleurs::GRIS);
             }
         }
     }
