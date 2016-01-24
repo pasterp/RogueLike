@@ -36,7 +36,7 @@ void AffichageJeu::afficherJeu()
     Case* cc;
     Couleur* coul;
     bool entTrouve;
-    for(int i=0; i < m_TailleY; i++){ //FIXME : Offset à ajouter pour afficher les créatures !!
+    for(int i=0; i < m_TailleY; i++){
         for(int j=0; j < m_TailleX; j++){
             glPushAttrib(GL_ALL_ATTRIB_BITS);
             glDisable(GL_LIGHTING);

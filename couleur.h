@@ -29,6 +29,7 @@ namespace Couleurs {
     static Couleur CYAN         =   Couleur(147,206,233);
     static Couleur ROUGE        =   Couleur(218,68,83);
     static Couleur ORANGE       =   Couleur(246,116,0);
+    static Couleur JAUNE        =   Couleur(246, 220, 18);
 }
 
 #endif // COULEUR_H

@@ -73,7 +73,7 @@ void Carte::InitCarte(int x, int y){
             if (j==0 || i==0 || j == m_TailleY-1 || i == m_TailleX-1){
                 m_Grille[j][i] = MUR;
             }else{
-                m_Grille[j][i] = Case('.', false, false, true, &Couleurs::CYAN, &Couleurs::GRIS);
+                m_Grille[j][i] = Case('.', false, false, true, &Couleurs::JAUNE, &Couleurs::GRIS);
             }
         }
     }
