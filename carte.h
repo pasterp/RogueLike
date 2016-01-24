@@ -16,7 +16,7 @@ public:
     void vision();
     void centrerSur(int x, int y);
     inline std::vector<std::vector<Case> > getGrille() {return m_Grille;}
-    std::vector<std::vector<Case> > getGrille(int x, int y);
+    std::vector<std::vector<Case> > getGrille(int x, int y, int* offsetX, int* offsetY);
     inline int getTailleX(){return m_TailleX;}
     inline int getTailleY(){return m_TailleY;}
 

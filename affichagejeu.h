@@ -2,6 +2,7 @@
 #define AFFICHAGEJEU_H
 
 #include <iostream>
+#include <string>
 
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
@@ -12,8 +13,6 @@
 #include "carte.h"
 #include "case.h"
 #include "keylistener.h"
-
-//TODO: Afficher les entites
 
 class AffichageJeu
 {

@@ -11,7 +11,7 @@ AffichageJeu::~AffichageJeu()
 
 AffichageJeu::AffichageJeu(Partie* p)
 {
-    initAffichageJeu(p, 50, 25, "Debug!");
+    initAffichageJeu(p, 20, 25, "Debug!");
 }
 
 AffichageJeu::AffichageJeu(Partie* p, int x, int y)
@@ -27,21 +27,23 @@ void AffichageJeu::afficherJeu()
 {
     Carte* carte = m_Partie->getCarte();
     std::vector<Entite*> entites = m_Partie->getEntites();
-    carte->centrerSur(25,12);
-    std::vector<std::vector<Case> > grille = carte->getGrille(m_TailleX, m_TailleY);
+    carte->centrerSur(m_Partie->getXPerso(),m_Partie->getYPerso());
+    int offsetX = 0;
+    int offsetY = 0;
+    std::vector<std::vector<Case> > grille = carte->getGrille(m_TailleX, m_TailleY, &offsetX, &offsetY);
 
     std::string c = "!";
     Case* cc;
     Couleur* coul;
     bool entTrouve;
-    for(int i=0; i < carte->getTailleY(); i++){
-        for(int j=0; j < carte->getTailleX(); j++){
+    for(int i=0; i < m_TailleY; i++){ //FIXME : Offset à ajouter pour afficher les créatures !!
+        for(int j=0; j < m_TailleX; j++){
             glPushAttrib(GL_ALL_ATTRIB_BITS);
             glDisable(GL_LIGHTING);
             glDisable(GL_DEPTH_TEST);
             entTrouve = false;
             for (unsigned int e = 0; e < entites.size() && !entTrouve; e++){
-                if (i==entites[e]->getY() && j==entites[e]->getX() && grille[i][j].isVisible()){
+                if (i+offsetY==entites[e]->getY() && j+offsetX==entites[e]->getX() && grille[i][j].isVisible()){
                     entTrouve = true;
 
                     c[0] = entites[e]->getSymbole();
@@ -57,7 +59,7 @@ void AffichageJeu::afficherJeu()
                     m_Font->Render(c.c_str(), -1, FTPoint(m_CharLargeur * j, m_CharHauteur * i));
                 }
             }
-            if(!entTrouve){
+            if(!entTrouve && grille[i][j].isDecouverte()){
                 cc = &grille[i][j];
                 c[0] = cc->getSymbole();
                 coul = cc->getCouleur();
@@ -73,6 +75,10 @@ void AffichageJeu::afficherJeu()
             glPopAttrib();
         }
     }
+
+    char vie[100];
+    sprintf(vie,"Vie du joueur : %d",m_Partie->getViePerso());
+    m_Font->Render(vie, -1, FTPoint(15,15));
 }
 
 void AffichageJeu::afficherMessage(std::string s){
@@ -101,7 +107,7 @@ void AffichageJeu::key_callback(GLFWwindow *window, int key, int scancode, int a
         glfwSetWindowShouldClose(window, GL_TRUE);
 
     if(action == GLFW_PRESS){
-        for(int i = 0; i < AffichageJeu::m_Listeners.size(); i++){
+        for(unsigned int i = 0; i < AffichageJeu::m_Listeners.size(); i++){
             AffichageJeu::m_Listeners[i]->keyPressed(key);
         }
     }
@@ -119,7 +125,7 @@ void AffichageJeu::initAffichageJeu(Partie* p, int x, int y, std::string s){
     m_Font->FaceSize(12);
 
     m_CharLargeur = m_Font->Advance("A");
-    m_CharHauteur = m_Font->LineHeight();
+    m_CharHauteur = m_Font->LineHeight()*0.5;
 
     if(!glfwInit()){
         std::cout << "GLFW non initialisé !" << std::endl;

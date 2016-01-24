@@ -31,20 +31,20 @@ void Carte::centrerSur(int x, int y)
     m_CentreY = y;
 }
 
-std::vector<std::vector<Case> > Carte::getGrille(int x, int y)
+std::vector<std::vector<Case> > Carte::getGrille(int x, int y, int* offsetX, int* offsetY)
 {
     std::vector<std::vector<Case> > carteTronquee;
     carteTronquee = std::vector<std::vector<Case> >(y, std::vector<Case>(x, VIDE));
     int xMin, xMax, yMin, yMax;
     //Centrer l'image sur (centreX,centreY)
-    xMin = (m_CentreX - x/2.0);
+    *offsetX = xMin = (m_CentreX - x/2.0);
     xMax = (m_CentreX + x/2.0);
     yMax = (m_CentreY + y/2.0);
-    yMin = (m_CentreY - y/2.0);
+    *offsetY = yMin = (m_CentreY - y/2.0);
     for (int j=yMin; j < yMax; j++){
         for (int i=xMin; i < xMax; i++){
             if (j >= m_TailleY || j<0 || i<0 || i >= m_TailleX){
-                //On laisse la casse générer vide
+                //On laisse la case générer vide
             }else{
                 //Sinon on copie la case que l'on a déjà
                 carteTronquee[j-yMin][i-xMin] = m_Grille[j][i];

@@ -17,11 +17,13 @@ public:
     inline int getY(){ return m_Y; }
     inline void setX(int x){ m_X = x; }
     inline void setY(int y){ m_Y = y; }
+    inline bool isPassable(){ return m_Passable; }
 protected:
     char m_Symbole;
     Couleur* m_Couleur;
     int m_X;
     int m_Y;
+    bool m_Passable;
 
     void InitEntite(int x, int y, char c, Couleur* coul);
 };

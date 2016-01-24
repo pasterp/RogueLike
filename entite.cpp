@@ -14,6 +14,7 @@ void Entite::InitEntite(int x, int y, char c, Couleur *coul)
 {
     m_X = x;
     m_Y = y;
+    m_Passable = false;
 
     m_Symbole = c;
 

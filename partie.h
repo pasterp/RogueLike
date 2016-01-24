@@ -17,6 +17,10 @@ public:
     Carte* getCarte();
     std::vector<Entite*> getEntites();
     bool deplacer(int xoffset, int yoffset);
+    int getViePerso();
+    int getXPerso() { return m_Joueur->getX(); }
+    int getYPerso() { return m_Joueur->getY(); }
+    bool isEntiteHere(int x, int y);
 private:
     Carte* m_Carte;
     Joueur* m_Joueur;

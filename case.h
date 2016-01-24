@@ -18,9 +18,11 @@ public:
     inline char* getSymbole_(){ return &m_Symbole; }
     inline Couleur* getCouleur(){ return (m_Visible) ? m_CouleurVisible : m_CouleurNonvisible; }
     inline bool isVisible(){ return m_Visible; }
+    inline bool isDecouverte(){ return m_Decouverte; }
     inline bool isPassable(){ return m_Passable; }
     inline void setVisible(bool b){ m_Visible = b; }
     inline void setDecouverte(bool b){ m_Decouverte = b; }
+    void addObjet(Objet* obj){ m_Objets.push_back(obj);}
 private:
     char m_Symbole;
     bool m_Decouverte;
@@ -28,7 +30,7 @@ private:
     bool m_Passable;
     Couleur* m_CouleurVisible;
     Couleur* m_CouleurNonvisible;
-    std::vector<Objet> m_Objets;
+    std::vector<Objet*> m_Objets;
 
     void InitCase(char s, bool d, bool v, bool p, Couleur* visible, Couleur* nonvisible);
 };

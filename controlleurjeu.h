@@ -8,9 +8,6 @@
 #include "affichagejeu.h"
 #include "keylistener.h"
 
-//TODO: Intégrer la gestion des inputs utilisateurs
-//TODO: Register a fonction depuis l'affichage
-
 class ControlleurJeu : public keyListener
 {
 public:
