@@ -30,7 +30,8 @@ void AffichageJeu::afficherJeu()
     carte->centrerSur(m_Partie->getXPerso(),m_Partie->getYPerso());
     int offsetX = 0;
     int offsetY = 0;
-    std::vector<std::vector<Case> > grille = carte->getGrille(m_TailleX, m_TailleY, &offsetX, &offsetY);
+    std::vector<std::vector<Case*> > grille = carte->getGrille();
+            //carte->getGrille(m_TailleX, m_TailleY, &offsetX, &offsetY);
 
     std::string c = "!";
     Case* cc;
@@ -43,7 +44,7 @@ void AffichageJeu::afficherJeu()
             glDisable(GL_DEPTH_TEST);
             entTrouve = false;
             for (unsigned int e = 0; e < entites.size() && !entTrouve; e++){
-                if (i+offsetY==entites[e]->getY() && j+offsetX==entites[e]->getX() && grille[i][j].isVisible()){
+                if (i+offsetY==entites[e]->getY() && j+offsetX==entites[e]->getX() && grille[i][j]->isVisible()){
                     entTrouve = true;
 
                     c[0] = entites[e]->getSymbole();
@@ -59,8 +60,8 @@ void AffichageJeu::afficherJeu()
                     m_Font->Render(c.c_str(), -1, FTPoint(m_CharLargeur * j, m_CharHauteur * i));
                 }
             }
-            if(!entTrouve && grille[i][j].isDecouverte()){
-                cc = &grille[i][j];
+            if(!entTrouve && grille[i][j]->isDecouverte()){
+                cc = grille[i][j];
                 c[0] = cc->getSymbole();
                 coul = cc->getCouleur();
 
@@ -79,6 +80,9 @@ void AffichageJeu::afficherJeu()
     char vie[100];
     sprintf(vie,"Vie du joueur : %d",m_Partie->getViePerso());
     m_Font->Render(vie, -1, FTPoint(15,15));
+
+    sprintf(vie,"Faim du joueur : %d",m_Partie->getFaimPerso());
+    m_Font->Render(vie, -1, FTPoint(15,5));
 }
 
 void AffichageJeu::afficherMessage(std::string s){
@@ -87,6 +91,15 @@ void AffichageJeu::afficherMessage(std::string s){
 
 bool AffichageJeu::renduIteration()
 {
+    double currentTime = glfwGetTime();
+    nbFrame++;
+
+    if (currentTime - lastTime >= 1.0){
+        std::cout << "Nombre de frames par secondes : " << nbFrame << std::endl;
+        lastTime += 1.0;
+        nbFrame = 0;
+    }
+
     glfwSwapBuffers(m_Window);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -106,7 +119,7 @@ void AffichageJeu::key_callback(GLFWwindow *window, int key, int scancode, int a
     if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
         glfwSetWindowShouldClose(window, GL_TRUE);
 
-    if(action == GLFW_PRESS){
+    if(action == GLFW_PRESS || action == GLFW_REPEAT){
         for(unsigned int i = 0; i < AffichageJeu::m_Listeners.size(); i++){
             AffichageJeu::m_Listeners[i]->keyPressed(key);
         }
@@ -156,4 +169,7 @@ void AffichageJeu::initAffichageJeu(Partie* p, int x, int y, std::string s){
     glfwSetKeyCallback(m_Window, AffichageJeu::key_callback);
 
     glClearColor(Couleurs::GRIS_FONCE.Rf(), Couleurs::GRIS_FONCE.Vf(), Couleurs::GRIS_FONCE.Bf(), 1.0f);
+
+    lastTime = glfwGetTime();
+    nbFrame = 0;
 }

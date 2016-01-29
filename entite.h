@@ -11,7 +11,7 @@ public:
     Entite();
     Entite(int x, int y);
 
-    inline char getSymbole(){ return m_Symbole; }
+    virtual inline char getSymbole(){ return m_Symbole; }
     inline Couleur* getCouleur(){ return m_Couleur; }
     inline int getX(){ return m_X; }
     inline int getY(){ return m_Y; }

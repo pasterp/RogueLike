@@ -48,6 +48,9 @@ private:
     FTGLPixmapFont* m_Font;
     static std::vector<keyListener*> m_Listeners;
 
+    double lastTime;
+    int nbFrame;
+
     void initAffichageJeu(Partie* p, int x, int y, std::string s);
 };
 

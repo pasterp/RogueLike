@@ -18,6 +18,7 @@ public:
     std::vector<Entite*> getEntites();
     bool deplacer(int xoffset, int yoffset);
     int getViePerso();
+    int getFaimPerso();
     int getXPerso() { return m_Joueur->getX(); }
     int getYPerso() { return m_Joueur->getY(); }
     bool isEntiteHere(int x, int y);

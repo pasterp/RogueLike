@@ -9,9 +9,10 @@
 class Creature : public Entite
 {
 
-private:
+protected:
     char* m_Nom;
     Couleur* m_CouleurNom;
+    float m_VieActuelle;
     float* m_Attr_Vie;
     float* m_Attr_Force;
     float* m_Attr_Dexterite;
@@ -25,20 +26,27 @@ private:
     bool sexeMasculin;
 public:
     Creature(int x, int y);
-    void recevoirDegats(float degat);
+    void recevoirDegats(float degat, int typeDegats);
     float attaquer(Creature* cible);
     void addBonusAttribut(int attributIndex, float multiplicateur);
     void setAttribut(int attributIndex, float valeur);
     float getAttribut(int attributIndex);
+    inline bool isVivant() { return ((int)m_VieActuelle > 0); }
+    inline float getVieActuelle(){ return m_VieActuelle; }
+    void deplacer(int x, int y);
 
     static const int INDEX_MAX            = 6;
-    static const int INDEX_VIE            = 0;
-    static const int INDEX_FORCE          = 1;
-    static const int INDEX_DEXTERITE      = 2;
-    static const int INDEX_CHANCE         = 3;
-    static const int INDEX_AFFINITE       = 4;
-    static const int INDEX_INTELLIGENCE   = 5;
-    static const int INDEX_ENDURANCE      = 6;
+
+    static const int INDEX_VIE            = 0; //VIE = VIE_MAX !!
+    static const int INDEX_FORCE          = 1; // degat physique
+    static const int INDEX_DEXTERITE      = 2; // esquive
+    static const int INDEX_CHANCE         = 3; // coup crititque
+    static const int INDEX_AFFINITE       = 4; // cout en magie, niveau de sort
+    static const int INDEX_INTELLIGENCE   = 5; // res magie, degat magie
+    static const int INDEX_ENDURANCE      = 6; //ENDURANCE = déf / resistance physique
+
+    static const int DEGATS_PHYSIQUES     = 0;
+    static const int DEGATS_MAGIQUES      = 1;
 
 private:
     void initCreature(int x, int y, char* nom, float valeurAttributs, float valeurModificateur);

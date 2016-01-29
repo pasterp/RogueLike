@@ -24,7 +24,7 @@ std::vector<Entite*> Partie::getEntites()
 
 bool Partie::isEntiteHere(int x, int y){
     bool yes = false;
-    for(int i = 0; i < m_Entites.size() && !yes; i++)
+    for(unsigned int i = 0; i < m_Entites.size() && !yes; i++)
             yes = m_Entites[i]->getX() == x && m_Entites[i]->getY() == y && !m_Entites[i]->isPassable();
     return yes;
 }
@@ -35,11 +35,10 @@ bool Partie::deplacer(int xoffset, int yoffset)
     int x = m_Joueur->getX();
     int y = m_Joueur->getY();
 
-    deplacementPossible = (*m_Carte)[y+yoffset][x+xoffset].isPassable() && !isEntiteHere(x+xoffset,y+yoffset);
+    deplacementPossible = (*m_Carte)[y+yoffset][x+xoffset]->isPassable() && !isEntiteHere(x+xoffset,y+yoffset);
 
     if (deplacementPossible){
-       m_Joueur->setX(x+xoffset);
-       m_Joueur->setY(y+yoffset);
+       m_Joueur->deplacer(x+xoffset, y+yoffset);
     }
 
     return deplacementPossible;
@@ -47,7 +46,12 @@ bool Partie::deplacer(int xoffset, int yoffset)
 
 int Partie::getViePerso()
 {
-    return (int)m_Joueur->getAttribut(Joueur::INDEX_VIE);
+    return (int)m_Joueur->getVieActuelle();
+}
+
+int Partie::getFaimPerso()
+{
+    return m_Joueur->getFaim();
 }
 
 void Partie::InitPartie(int x, int y)
